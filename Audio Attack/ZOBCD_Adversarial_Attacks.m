@@ -6,7 +6,7 @@ function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOB
 % ======================== INPUTS ================================= %
 % function_handle .......... name of oracle function.
 % function_params .......... any parameters required by function
-% ZOBCD_params .............. Parameters required by ZORO.
+% ZOBCD_params .............. Parameters required by ZOBCD.
 % cosamp_params ............ Parameters required by the call to cosamp
 %
 % ======================== OUTPUTS =============================== %
