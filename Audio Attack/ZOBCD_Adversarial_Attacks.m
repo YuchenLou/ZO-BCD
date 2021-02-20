@@ -1,6 +1,8 @@
-function outputs = BCD_ZORO_Adversarial_Attacks(function_handle,function_params,ZORO_params)
+function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZORO_params)
 
-% Basic Implementation of ZORO with flexible sensing matrix.
+% Basic Implementation of ZO-BCD designed to be used specifically 
+% for audio attacks.
+% 
 % ======================== INPUTS ================================= %
 % function_handle .......... name of oracle function.
 % function_params .......... any parameters required by function
