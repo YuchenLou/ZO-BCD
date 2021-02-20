@@ -1,4 +1,4 @@
-function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZORO_params)
+function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOBCD_params)
 
 % Basic Implementation of ZO-BCD designed to be used specifically 
 % for audio attacks.
@@ -6,7 +6,7 @@ function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOR
 % ======================== INPUTS ================================= %
 % function_handle .......... name of oracle function.
 % function_params .......... any parameters required by function
-% ZORO_params .............. Parameters required by ZORO.
+% ZOBCD_params .............. Parameters required by ZORO.
 % cosamp_params ............ Parameters required by the call to cosamp
 %
 % ======================== OUTPUTS =============================== %
@@ -22,15 +22,14 @@ function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOR
 % Yuchen Lou, Daniel McKenzie 2020 - 2021
 %
 
-D = ZORO_params.D;
-sparsity = ZORO_params.sparsity;
-num_iterations = ZORO_params.num_iterations;
-Type = ZORO_params.Type;
-delta1 = ZORO_params.delta1;
-%grad_estimate = ZORO_params.init_grad_estimate;
-x = ZORO_params.x0;
-step_size = ZORO_params.step_size;
-max_time = ZORO_params.max_time;
+D = ZOBCD_params.D;
+sparsity = ZOBCD_params.sparsity;
+num_iterations = ZOBCD_params.num_iterations;
+Type = ZOBCD_params.Type;
+delta1 = ZOBCD_params.delta1;
+x = ZOBCD_params.x0;
+step_size = ZOBCD_params.step_size;
+max_time = ZOBCD_params.max_time;
 Wavelet_distortion_ell_0 = NaN;
 Wavelet_distortion_ell_2 = NaN;
 
@@ -50,7 +49,7 @@ cosamp_params.sparsity = sparsity;
 oversampling_param = 1.1;
 
 % =========== Initialize sensing matrix
-J = ZORO_params.num_blocks;
+J = ZOBCD_params.num_blocks;
 block_size = ceil(D/J) - 1;
 sparsity = ceil(oversampling_param*sparsity/J); % upper bound on sparsity per block.
 samples_per_block = ceil(sparsity*log(block_size))
@@ -70,11 +69,8 @@ end
 
 cosamp_params.Z = Z;
 cosamp_params.delta = delta1;
-% ========== Now do ZORO
-% This code only allows for block methods
-    
-% ==== Initialize the blocks. 
-% Using random blocks here, but we can experiment.
+
+% ==== Randomly initialize the blocks. 
 P = randperm(function_params.D);
 
 
