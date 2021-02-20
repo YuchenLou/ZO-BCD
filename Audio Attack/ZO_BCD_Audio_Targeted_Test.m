@@ -2,6 +2,8 @@
 % This script attacks audio samples in a wavelet domain.
 % Attack a large number of samples in order to determine the
 % Attack Success Rate.
+% This script only considers "left" as the source class, but you may change
+% it to any other source class by modifying directory.
 % Yuchen Lou & Daniel McKenzie 2020.8 - 2021.1
 % ===================================================================== %
 
@@ -24,12 +26,12 @@ num_attack = 50; % number of attacks for each target label
 num_attacked_sounds = 1; % Counter to keep track of how many images attacked.
 
 % ================================ ZORO Parameters ==================== %
-ZORO_params.num_iterations = 500; % number of iterations
-ZORO_params.delta1 = 0.001;
-ZORO_params.init_grad_estimate = 100;
-ZORO_params.max_time = 3600;
-ZORO_params.num_blocks = 6000;
-ZORO_params.Type = "BCD";
+ZOBCD_params.num_iterations = 500; % number of iterations
+ZOBCD_params.delta1 = 0.001;
+ZOBCD_params.init_grad_estimate = 100;
+ZOBCD_params.max_time = 3600;
+ZOBCD_params.num_blocks = 6000;
+ZOBCD_params.Type = "BCD";
 function_handle = "AudioEvaluate";
 
 % ============ Initialize vectors to keep track of success ============= %
@@ -80,10 +82,10 @@ while num_attacked_sounds <= num_attack
     function_params.epsilon = 5; % Box Constraint params
     function_params.D = length(target_audio_wavelet(:));
     function_params.shape = size(target_audio_wavelet);
-    ZORO_params.D = function_params.D;
-    ZORO_params.sparsity = 0.025*ZORO_params.D;
-    ZORO_params.step_size = 0.05; % Step size. 3e-4 is value used by Kaidi Xu
-    ZORO_params.x0 = zeros(function_params.D,1);
+    ZOBCD_params.D = function_params.D;
+    ZOBCD_params.sparsity = 0.025*ZOBCD_params.D;
+    ZOBCD_params.step_size = 0.05; % Step size. 3e-4 is value used by Kaidi Xu
+    ZOBCD_params.x0 = zeros(function_params.D,1);
     
     for iii = 1:10 % Targeted Attack
         if (iii ~= true_idx)
@@ -93,10 +95,10 @@ while num_attacked_sounds <= num_attack
             if isnan(function_params.target_id) == 0
                 function_params.target_label = function_params.net.Layers(end).ClassNames(function_params.target_id);
             end
-            % ====================== run ZORO Attack ======================= %
-            outputs = BCD_ZORO_Adversarial_Attacks(function_handle,function_params,ZORO_params);
+            % ====================== run ZO-BCD Attack ======================= %
+            outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOBCD_params);
             
-            % == Store attacked image and noise
+            % == Store attacked sound and noise
             Attacked_Sounds_Cell{num_attacked_sounds,iii,1} = target_audio; % store true sound
             Attacked_Sounds_Cell{num_attacked_sounds,iii,2} = outputs.Attacking_Noise;
             Attacked_Sounds_Cell{num_attacked_sounds,iii,3} = outputs.Attacked_Audio;
@@ -106,7 +108,7 @@ while num_attacked_sounds <= num_attack
             ell_2_difference_wavelet(num_attacked_sounds,iii) = outputs.Wavelet_distortion_ell_2;
             % == Compute and store attack loudness
             % Change Attacking Noise!
-            Attack_Volume(num_attacked_sounds,iii) = 20*log(max(abs(outputs.Attacking_Noise))) - 20*log(max(abs(target_audio)));
+            Attack_Volume(num_attacked_sounds,iii) = 20*log10(max(abs(outputs.Attacking_Noise))) - 20*log10(max(abs(target_audio)));
             % == Store Attack success parameters
             Attack_Success(num_attacked_sounds,iii) = outputs.Success;
             Final_Labels(num_attacked_sounds,iii) = outputs.Final_Label;
