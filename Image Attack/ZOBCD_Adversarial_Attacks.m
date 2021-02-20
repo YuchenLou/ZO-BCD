@@ -1,4 +1,4 @@
-function outputs = BCD_ZORO_Adversarial_Attacks(function_handle,function_params,ZOBCD_params)
+function outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOBCD_params)
 
 % Basic Implementation of ZO-BCD designed to be used specifically for an
 % attack on the InceptionV3 classifier trained on ImageNet.

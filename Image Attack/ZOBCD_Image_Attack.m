@@ -1,4 +1,4 @@
-% ====================== Wavelet Block Attack ========================= %
+% ====================== Image Attack ================================= %
 % This script attempts to attack a large collection of imagenet images, 
 % using a wavelet attack. We want to determine the attack success rate.
 % Yuchen Lou 2020.8 - 2021.2
@@ -13,7 +13,7 @@ sz = function_params.net.Layers(1).InputSize;
 function_params.kappa = 0;
 Classes = function_params.net.Layers(end).Classes; % list of all imagenet classes.
 
-directory = '../Adversarial_Attacks_Experiments/imgs'; % path to images
+directory = 'imgs'; % path to images
 pictures = dir(fullfile(directory, '*.jpg'));
 num_images = length(pictures);
 rng(1,'twister') % Fix the random seed.
@@ -26,12 +26,12 @@ num_attacked_images = 1; % Counter to keep track of how many images attacked.
  level = 3;
 
  % ================================ ZORO Parameters ==================== %
-ZORO_params.num_iterations = 193; % number of iterations
-ZORO_params.delta1 = 0.01; % sampling radius
-ZORO_params.init_grad_estimate = 100;
-ZORO_params.max_time = 3600;
-ZORO_params.num_blocks = 3960; % number of blocks
-ZORO_params.Type = "BCD"; % "BCD" for ZO-BCD-R; "BCCD" for ZO-BCD-RC
+ZOBCD_params.num_iterations = 193; % number of iterations
+ZOBCD_params.delta1 = 0.01; % sampling radius
+ZOBCD_params.init_grad_estimate = 100;
+ZOBCD_params.max_time = 3600;
+ZOBCD_params.num_blocks = 3960; % number of blocks
+ZOBCD_params.Type = "BCD"; % "BCD" for ZO-BCD-R; "BCCD" for ZO-BCD-RC
 function_handle = "ImageEvaluate";
 
 % ==== Set to untargeted attack
@@ -93,12 +93,12 @@ while num_attacked_images <= num_attack
     function_params.shape = shape;
     function_params.epsilon = 5; % box Constraint parameter
     function_params.D = length(c);
-    ZORO_params.D = length(c);
-    ZORO_params.sparsity = 0.05*ZORO_params.D; % sparsity
-    ZORO_params.step_size = 10; % step size
-    ZORO_params.x0 = zeros(function_params.D,1);
-    % ====================== run ZORO Attack ======================= %
-    outputs = BCD_ZORO_Adversarial_Attacks(function_handle,function_params,ZORO_params);
+    ZOBCD_params.D = length(c);
+    ZOBCD_params.sparsity = 0.05*ZOBCD_params.D; % sparsity
+    ZOBCD_params.step_size = 10; % step size
+    ZOBCD_params.x0 = zeros(function_params.D,1);
+    % ====================== run ZOBCD Attack ======================= %
+    outputs = ZOBCD_Adversarial_Attacks(function_handle,function_params,ZOBCD_params);
     ell_2_difference(num_attacked_images) = norm(outputs.Attacking_Noise(:),2);
     disp(['ell_2 norm of attacking noise in pixel domain is ',num2str(ell_2_difference(num_attacked_images))])
     ell_0_difference(num_attacked_images) = nnz(outputs.Attacking_Noise(:));
