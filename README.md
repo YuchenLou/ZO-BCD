@@ -10,7 +10,7 @@ To replicate our imagenet attacks do the following:
 
 ## Audio Attack
 To replicate our audio attacks do the following:
-1. You will need the Audio, Wavelet, and Deep Learning toolboxes in Matlab installed.
+1. You will need the Audio, Wavelet, and Deep Learning toolboxes in Matlab installed (need the version to be at least 2019b for Audio toolbox).
 2. Follow the instructions [here](https://www.mathworks.com/help/deeplearning/ug/deep-learning-speech-recognition.html) to download the SpeechCommands data set. Put the folders in `Audio Attack/Sounds`. This path can be changed in `ZO_BCD_Audio_Targeted_Test.m`.
 3. Open the MATLAB Deep Learning Speech Recognition Example folder (as described [here](https://www.mathworks.com/help/deeplearning/ug/deep-learning-speech-recognition.html) ). You will need to copy `commandNet.mat` and `helperExtractAuditoryFeatures.m` into `Audio Attack` .
 4. That's it! You can now run `ZO_BCD_Audio_Targeted_Test.m` and see the results. Note that we have included a few sample outputs in `Examples`.
