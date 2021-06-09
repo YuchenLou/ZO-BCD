@@ -50,13 +50,16 @@ def cosamp(Phi, u, K, tol, maxiterations):
     
     while t<= maxiterations and not halt:
         y = np.abs(np.dot(Phi.T,v))
-        target = np.sort(y)[::-1][2*K]
+        #target = np.sort(y)[::-1][2*K]
+        target = -np.partition(-y,2*K-1)[2*K-1]
         Omega = [i for (i, val) in enumerate(y)
                  if val > target and val > num_precision]
         T = np.union1d(Omega, T)
         T = T.astype(int)
-        b ,_ ,_ ,_ = la.lstsq(Phi[:,T], u, rcond=None)
-        Kgoodindices = (abs(b) > np.sort(abs(b))[::-1][K]) & (abs(b) > num_precision)
+        b, _, _, _ = la.lstsq(Phi[:,T], u, rcond=None)
+        # target  = np.sort(abs(b))[::-1][K]
+        target = -np.partition(-abs(b), K-1)[K-1]
+        Kgoodindices = (abs(b) > target) & (abs(b) > num_precision)
         T = T[Kgoodindices]
         Sest = np.zeros(np.shape(Phi)[1])
         b = b[Kgoodindices]

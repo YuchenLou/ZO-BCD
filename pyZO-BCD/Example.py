@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 n = 20000 # problem dimension
 s_exact = 200   # True sparsity 
 noiseamp = 0.001  # noise amplitude 
-obj_func = MaxK(n, s, noiseamp)  # initialize objective function
+obj_func = MaxK(n, s_exact, noiseamp)  # initialize objective function
 
 
 ######################## Initialize ZO-BCD ###################################
