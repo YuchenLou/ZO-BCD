@@ -19,4 +19,5 @@ To replicate our audio attacks do the following:
 
 ## Generic ZO-BCD
 We provide both MATLAB and Python Implementations of the generic ZO-BCD in the folders `matlabZO-BCD` and `pyZO-BCD` respectively. We use the MATLAB version for the sythetic experiments in our paper. Run `Test_ZOBCD.m` in the folder `matlabZO-BCD` to get a general comparsion between two variants of ZO-BCD: ZO-BCD-R and ZO-BCD-RC.
+
 Notice that we use MATLAB's "run and time" for the time experiment in our paper.
