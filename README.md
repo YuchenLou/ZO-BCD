@@ -16,3 +16,7 @@ To replicate our audio attacks do the following:
 2. Follow the instructions [here](https://www.mathworks.com/help/deeplearning/ug/deep-learning-speech-recognition.html) to download the SpeechCommands data set. Put the folders in `Audio Attack/Sounds`. This path can be changed in `ZO_BCD_Audio_Targeted_Test.m`.
 3. Open the MATLAB Deep Learning Speech Recognition Example folder (as described [here](https://www.mathworks.com/help/deeplearning/ug/deep-learning-speech-recognition.html) ). You will need to copy `commandNet.mat` and `helperExtractAuditoryFeatures.m` into `Audio Attack` .
 4. That's it! You can now run `ZO_BCD_Audio_Targeted_Test.m` and see the results. Note that we have included a few sample outputs in `Examples`.
+
+## Generic ZO-BCD
+We provide both MATLAB and Python Implementations of the generic ZO-BCD in the folders `matlabZO-BCD` and `pyZO-BCD` respectively. We use the MATLAB version for the sythetic experiments in our paper. Run `Test_ZOBCD.m` in the folder `matlabZO-BCD` to get a general comparsion between two variants of ZO-BCD: ZO-BCD-R and ZO-BCD-RC.
+Notice that we use MATLAB's "run and time" for the time experiment in our paper.
