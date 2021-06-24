@@ -14,8 +14,9 @@ function [x_hat,f_vals,time_vec,gradient_norm,num_samples_vec,runtime] = ZOBCD(f
 % iteration.
 % gradient_norm ............ vec containing ||g_k|| for all k.
 % num_samples_vec .......... number of samples made at iteration k
+% runtime .................. recording runtime of a single cosamp
 %
-% Daniel McKenzie 2019-2020, Yuchen Lou 2020-2021
+% Daniel McKenzie 2019--2020, Yuchen Lou 2020--2021
 %
 x = ZOBCD_params.x0;
 Type = ZOBCD_params.Type;
@@ -36,7 +37,7 @@ num_samples = 4*sparsity;
 cosamp_params.maxiterations = ZOBCD_params.cosamp_max_iter;
 cosamp_params.tol = 0.5;
 cosamp_params.sparsity = sparsity;
-oversampling_param = 1.5;
+oversampling_param = 1.5; % parameter to give an upper bound of block sparsity
 
 % ========== Initialize the sensing matrix
 
@@ -55,14 +56,14 @@ if (Type == "ZO-BCD-R")
     Z = 2*(rand(samples_per_block,block_size) > 0.5) - 1;
     
 elseif (Type == "ZO-BCD-RC")
-    % Block Circulant Coordinate Descent
+    % Block Rademacher Circulant Coordinate Descent
     z1 = 2*(rand(1,block_size) > 0.5) -1;
     Z1 = gallery('circul',z1);
     SSet = datasample(1:block_size,samples_per_block,'Replace',false);
     cosamp_params.SSet = SSet;
     
-    z1_fft = fft(z1(:));
-    cosamp_params.z1_fft = z1_fft;
+    %z1_fft = fft(z1(:));
+    %cosamp_params.z1_fft = z1_fft;
     z_trans = Z1(:,1)';
     z_trans_fft = fft(z_trans(:));
     cosamp_params.z_trans_fft = z_trans_fft;
@@ -74,7 +75,6 @@ cosamp_params.Z = Z;
 % ========== Now do ZO-BCD
 for i = 1:num_iterations
     tic
-    %i
     cosamp_params.delta = delta1 * norm(grad_estimate);
     coord_index = randi(J);% randomly select a block
     block = (coord_index-1)*block_size+1 : coord_index*block_size;
@@ -101,8 +101,6 @@ for i = 1:num_iterations
         break
     end
 end
-
-
 x_hat = x;
 end
 

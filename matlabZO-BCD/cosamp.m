@@ -27,7 +27,7 @@ function Sest = cosamp(Phi,u,K,tol,maxiterations)
 % Short Disclaimer: this script is for educational purpose only.
 % Longer Disclaimer see  http://igorcarron.googlepages.com/disclaimer
 
-% Modified by Daniel McKenzie and HanQin Cai in 2020-2021 for a better
+% Modified by Daniel McKenzie and HanQin Cai in 2020--2021 for a better
 % performance.
 
 % Initialization

@@ -5,6 +5,7 @@ function [val,grad] = SparseQuadric(x_in,function_params)
 %
 % =========================== INPUTS ================================= %
 % x_in ...................... Point at which to evaluate
+% function parameters
 % S ......................... Suppose set of sparse quadric. Keep this the
 % same
 % D ......................... Ambient dimension
@@ -14,7 +15,6 @@ function [val,grad] = SparseQuadric(x_in,function_params)
 % 
 % val ...................... noisy function evaluation at x_in
 % grad ..................... exact (ie no noise) gradient evaluation at
-% x_in
 %
 % Daniel Mckenzie
 % 26th June 2019

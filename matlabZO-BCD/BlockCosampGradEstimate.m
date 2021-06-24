@@ -7,12 +7,14 @@ function [function_estimate,grad_estimate,runtime] = BlockCosampGradEstimate(fun
 % x ............................ point at which to estimate gradient
 % cosamp_params ................ Sampling matrix etc.
 % function_params .............. (optional) parameters if required.
+% Type ......................... Choice of ZO-BCD-R or -RC
 %
 % ======================== OUTPUTS =============================== %
 % function_estimate ........... value of function_handle(x)
 % grad_estimate ............... estimated gradient
+% runtime ..................... recording runtime of a single cosamp
 
-% Daniel Mckenzie, Hanqin Cai and Yuchen Lou 2019--2020
+% Daniel Mckenzie, Hanqin Cai and Yuchen Lou 2019--2021
 %
 
 
@@ -46,12 +48,12 @@ end
 Z = Z/sqrt(num_samples);
 
 if (Type == "ZO-BCD-RC")
-    z1_fft = cosamp_params.z1_fft;
+    %z1_fft = cosamp_params.z1_fft;
     z_trans_fft = cosamp_params.z_trans_fft;
     SSet = cosamp_params.SSet;
     
     tic;
-    block_grad_estimate = cosamp_cir(Z,y,sparsity,tol,maxiterations,z1_fft,z_trans_fft,SSet);
+    block_grad_estimate = cosamp_cir(Z,y,sparsity,tol,maxiterations,z_trans_fft,SSet);
     runtime = toc;
     
 else

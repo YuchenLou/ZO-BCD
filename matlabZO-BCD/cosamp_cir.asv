@@ -7,8 +7,7 @@ function Sest = cosamp_cir(Phi,u,K,tol,maxiterations,z_trans_fft,SSet)
 %       u: measured vector
 %       tol : tolerance for approximation between successive solutions.
 %       maxiterations: maximal number of iterations allowed.
-%       z_trans_fft: pre-calculated fft.
-%       SSet: index set of the samples selected.
+%       z_trans_fft: P
 %   Output
 %       Sest: Solution found by the algorithm
 %
@@ -21,7 +20,7 @@ function Sest = cosamp_cir(Phi,u,K,tol,maxiterations,z_trans_fft,SSet)
 % and modified 20110707 by Bob L. Sturm.
 % It was further modified by Daniel Mckenzie & HanQin Cai for a better
 % performance, and was modified by Yuchen Lou for the acceleration of fft, 
-% in order to cope with the implementation of ZO-BCD-RC in 2020--2021
+% in order to cope with the implementation of ZO-BCD-RC
 
 % Initialization
 Sest = zeros(size(Phi,2),1);
@@ -48,8 +47,7 @@ while (t <= maxiterations) && (err > tol)
   Sest = zeros(size(Phi,2),1);
   b = b(Kgoodindices);
   Sest(T) = b;
-  v = u - Phi(:,T)*b; % Notice: The scale of this problem is small, and is
-  % not necessary to be acclerated by fft in particular experiments.
+  v = u - Phi(:,T)*b;
   t = t+1;
   err = norm(v)/norm(u);
 end
