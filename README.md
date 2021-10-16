@@ -1,7 +1,7 @@
 # ZO-BCD
 This repository is for our paper:
 
-[1] HanQin Cai, Yuchen Lou, Daniel Mckenzie, and Wotao Yin. A Zeroth-Order Block Coordinate Descent Algorithm for Huge-Scale Black-Box Optimization. *International Conference on Machine Learning*, 2021.
+[1] HanQin Cai, Yuchen Lou, Daniel Mckenzie, and Wotao Yin. A Zeroth-Order Block Coordinate Descent Algorithm for Huge-Scale Black-Box Optimization. In *International Conference on Machine Learning*, 2021.
 
 ## Imagenet Attack
 To replicate our imagenet attacks do the following:
