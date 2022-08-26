@@ -7,7 +7,7 @@ This repository is for our paper:
 To replicate our imagenet attacks do the following:
 1. You will need the Wavelet toolbox and the Deep Learning toolbox installed on Matlab.
 2. Download the pre-trained Inceptionv3 model, as described [here](https://www.mathworks.com/help/deeplearning/ref/inceptionv3.html).
-3. Download the ImageNet test set, available [here](http://jaina.cs.ucdavis.edu/datasets/adv/imagenet/). Copy this folder into `Image Attack`. (Alternatively, update the path in `ZOBCD_Image_Attack.m` file).
+3. Download the ImageNet test set, available [here](https://image-net.org/download.php). Copy this folder into `Image Attack`. (Alternatively, update the path in `ZOBCD_Image_Attack.m` file).
 4. That's it! Run `ZOBCD_Image_Attack.m` to perform the attacks. Note that we have included a few sample outputs in `Examples`.
 
 ## Audio Attack
